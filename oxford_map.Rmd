@@ -1,0 +1,23 @@
+---
+title: "Oxford Map"
+author: "Chuck Lanfear"
+date: '2022-07-19'
+output: html_document
+---
+
+```{r setup, include=TRUE, message = FALSE, warning = FALSE, echo = FALSE}
+library(tidyverse)
+library(sf)
+library(leaflet)
+load("./data/oxford_lsoas.RData")
+```
+
+Making interactive maps in R is trivial using leaflet. We can add additional layers (e.g., post boxes) to this as we get them.
+
+```{r}
+oxford_lsoas  %>% # Start with LSOA data
+  leaflet() %>% # Initialize map
+  addTiles() %>% # Add background map
+  addPolygons(label = ~lsoa11cd,  # Make polygons for LSOAs
+              labelOptions = labelOptions(permanent=TRUE)) # Make labels show
+```
